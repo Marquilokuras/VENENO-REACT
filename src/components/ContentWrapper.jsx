@@ -8,7 +8,7 @@ function ContentWrapper(){
             {/*<!-- Content Wrapper -->*/}
             <div id="content-wrapper" className="d-flex flex-column">
                 {/*<!-- Main Content -->*/}
-                <div id="content">
+                <div id="content" >
                     <TopBar />
                     <ContentRowTop />
                     <Footer />
