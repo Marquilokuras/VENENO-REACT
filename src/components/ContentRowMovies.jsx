@@ -1,58 +1,61 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SmallCard from "./SmallCard";
 import NotFound from "./NotFound";
 
-let totalProduct = {};
-let totalCategory = {};
-let totalUser = {};
-
-/*  Cada set de datos es un objeto literal */
-fetch("http://localhost:3000/api/products/")
-  .then((response) => response.json())
-  .then((data) => {
-    // Manipular los datos obtenidos
-    console.log(data);
-
-    totalProduct = {
-      title: "Total de Productos",
-      color: "primary",
-      cuantity: 21,
-      icon: "fa-clipboard-list",
-    };
-
-    totalCategory = {
-      title: " Total de Categorias",
-      color: "success",
-      cuantity: "79",
-      icon: "fa-solid fa-list",
-    };
-  })
-  .catch((error) => {
-    <NotFound></NotFound>;
-    console.error("Error al obtener los datos:", error);
-  });
-
-fetch("http://localhost:3000/api/users/")
-  .then((response) => response.json())
-  .then((data) => {
-    // Manipular los datos obtenidos
-    console.log(data);
-
-    totalUser = {
-      title: "Total de Usuarios",
-      color: "warning",
-      cuantity: "49",
-      icon: "fa-user-check",
-    };
-  })
-  .catch((error) => {
-    <NotFound></NotFound>;
-    console.error("Error al obtener los datos:", error);
-  });
-
-let cartProps = [totalProduct, totalCategory, totalUser];
-
 function ContentRowMovies() {
+  const [products, setProducts] = useState([]);
+  const [totalProducts, setTotalProducts] = useState(0);
+  const [totalUser, setTotalUser] = useState({});
+  const [totalCategories, setTotalCategories] = useState(0);
+
+  useEffect(() => {
+    fetch("http://localhost:4200/api/products/list")
+      .then((response) => response.json())
+      .then((data) => {
+        setProducts(data.data);
+        setTotalProducts(data.meta.total);
+
+        // Calcular el total de categorías
+        const categories = data.data.map((product) => product.category);
+        const uniqueCategories = new Set(categories);
+        setTotalCategories(uniqueCategories.size);
+      })
+      .catch((error) => {
+        <NotFound/>
+      });
+
+    fetch("http://localhost:4200/api/users/")
+      .then((response) => response.json())
+      .then((data) => {
+        const newUser = {
+          title: "Total de Usuarios",
+          color: "warning",
+          cuantity: "49", 
+          icon: "fa-user-check",
+        };
+        setTotalUser(newUser);
+      })
+      .catch((error) => {
+        <NotFound/>
+      });
+  }, []);
+
+  const totalProduct = {
+    title: "Total de Productos",
+    color: "primary",
+    cuantity: totalProducts,
+    icon: "fa-clipboard-list",
+  };
+
+  const totalCategory = {
+    title: "Total de Categorias",
+    color: "success",
+    cuantity: totalCategories,
+    icon: "fa-solid fa-list",
+  };
+
+  const cartProps = [totalProduct, totalCategory, totalUser];
+
   return (
     <div className="row">
       {cartProps.map((product, i) => {
