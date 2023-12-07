@@ -12,11 +12,11 @@ function ContentRowMovies() {
     fetch("http://localhost:4200/api/products/list")
       .then((response) => response.json())
       .then((data) => {
-        setProducts(data.data);
-        setTotalProducts(data.meta.total);
+        setProducts(data.products);
+        setTotalProducts(data.meta.count);
 
-        // Calcular el total de categorías
-        const categories = data.data.map((product) => product.category);
+        // Calculate the total number of unique categories
+        const categories = data.products.map((product) => product.category);
         const uniqueCategories = new Set(categories);
         setTotalCategories(uniqueCategories.size);
       })
@@ -24,16 +24,17 @@ function ContentRowMovies() {
         <NotFound/>
       });
 
-    fetch("http://localhost:4200/api/users/")
+    fetch("http://localhost:4200/api/users/list")
       .then((response) => response.json())
       .then((data) => {
-        const newUser = {
+        console.log(data)
+        const totalUsers = {
           title: "Total de Usuarios",
           color: "warning",
-          cuantity: "49", 
+          quantity: data.meta.count.toString(), 
           icon: "fa-user-check",
         };
-        setTotalUser(newUser);
+      setTotalUser(totalUsers);
       })
       .catch((error) => {
         <NotFound/>
