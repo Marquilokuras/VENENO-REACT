@@ -9,7 +9,7 @@ function TotalCategory() {
       .then((data) => {
         console.log(data);
         // Obtener todas las categorías de los productos
-        const products = data.data;
+        const products = data.products;
 
         // Crear un objeto para almacenar el recuento de productos por categoría
         const productsByCategory = {};

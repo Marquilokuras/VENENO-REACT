@@ -9,8 +9,9 @@ function ProductsList() {
     fetch("http://localhost:4200/api/products/list")
       .then((response) => response.json())
       .then((data) => {
-        setProducts(data.data);
-        setTotalProducts(data.meta.total);
+        console.log(data)
+        setProducts(data.products);
+        setTotalProducts(data.meta.count);
       })
       .catch((error) => {
         <NotFound></NotFound>;

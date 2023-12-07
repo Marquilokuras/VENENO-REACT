@@ -8,9 +8,11 @@ function LastMovieInDb(){
     fetch("http://localhost:4200/api/products/list")
       .then((response) => response.json())
       .then((data) => {
-        // Obtener el último producto de la lista
-        const latestProduct = data.data[data.data.length - 1];
-        setLastProduct(latestProduct);
+        const products = data.products;
+        if (products.length > 0) {
+            const latestProduct = products[products.length - 1];
+            setLastProduct(latestProduct);
+        }
       })
       .catch((error) => {
         <NotFound/>
