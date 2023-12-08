@@ -5,7 +5,7 @@ import NotFound from "./NotFound";
 function ContentRowMovies() {
   const [products, setProducts] = useState([]);
   const [totalProducts, setTotalProducts] = useState(0);
-  const [totalUser, setTotalUser] = useState({});
+  const [totalUsers, setTotalUser] = useState(0);
   const [totalCategories, setTotalCategories] = useState(0);
 
   useEffect(() => {
@@ -27,14 +27,7 @@ function ContentRowMovies() {
     fetch("http://localhost:4200/api/users/list")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
-        const totalUsers = {
-          title: "Total de Usuarios",
-          color: "warning",
-          quantity: data.meta.count.toString(), 
-          icon: "fa-user-check",
-        };
-      setTotalUser(totalUsers);
+        setTotalUser(data.meta.count );
       })
       .catch((error) => {
         <NotFound/>
@@ -53,6 +46,13 @@ function ContentRowMovies() {
     color: "success",
     cuantity: totalCategories,
     icon: "fa-solid fa-list",
+  };
+
+  const totalUser = {
+    title: "Total de Usuarios",
+    color: "warning",
+    cuantity: totalUsers, 
+    icon: "fa-user-check",
   };
 
   const cartProps = [totalProduct, totalCategory, totalUser];
