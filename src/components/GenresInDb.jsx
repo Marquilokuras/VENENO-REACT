@@ -8,7 +8,6 @@ function GenresInDb() {
     fetch("http://localhost:4200/api/users/list")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
         const users = data.users;
         if (users.length > 0) {
           const latestUser = users[users.length - 1];
@@ -48,8 +47,8 @@ function GenresInDb() {
               <img
                 className="img-fluid px-3 px-sm-4 mt-3 mb-4"
                 style={{ width: "40rem" }}
-                src={lastUser.image}
-                alt={lastUser.name}
+                src={"http://localhost:4200/img/users/"+lastUser.image}
+                alt= {capitalizeFirstLetter(lastUser.name)}
               />
             </div>
             <p>Nombre: {capitalizeFirstLetter(lastUser.name)}</p>
