@@ -9,7 +9,6 @@ function ProductsList() {
     fetch("http://localhost:4200/api/products/list")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
         setProducts(data.products);
         setTotalProducts(data.meta.count);
       })
@@ -50,7 +49,7 @@ function ProductsList() {
                   <img
                     className="img-fluid px-3 px-sm-4 mt-3 mb-4"
                     style={{ width: "40rem" }}
-                    src={product.image}
+                    src={"http://localhost:4200/img/"+product.image}
                     alt={product.name}
                   />
                 </div>
